@@ -12,12 +12,12 @@ except:
 
 @app.route("/timezones", methods = ['GET'])
 def get_timezones():
-    latitude = float(request.args.get("lat"))
-    longitude = float(request.args.get("lon"))
+    latitude = (request.args.get("lat"))
+    longitude = (request.args.get("lon"))
 
     # in case we have the arguments "lon" and "lat" present, return a specific time zone
     if (latitude and longitude):
-        coordinates = Point(longitude, latitude)
+        coordinates = Point(float(longitude), float(latitude))
 
         # compute the nearest time zone for any given point
         # in case it is from 'uninhibited' area, get closest available time zone
@@ -39,4 +39,4 @@ def get_timezones():
         return {"timezones": list(unique_timezones)}
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000, threaded = True)
